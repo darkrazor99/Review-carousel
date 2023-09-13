@@ -37,6 +37,28 @@ const img = document.getElementById("person-img");
 const prevBtn = document.querySelector(".prev-btn");
 const nextBtn = document.querySelector(".next-btn");
 const randBtn = document.querySelector(".random-btn");
+
+//helper functions
+function showPerson(person) {
+  author.textContent = person.name;
+  job.textContent = person.job;
+  img.setAttribute("src", person.img);
+  text.textContent = person.text;
+}
+
+// newRand is an evenly distributed random number 
+// in the range [0, max - 1]. Then,
+// assuming that oldRand is in the range,
+// we add one, so you get a split range [0, oldRand - 1], 
+// [oldRand + 1, max], with an even chance to each result
+function genrateUniqRand(max) {
+  let newPosition = Math.floor(Math.random() * (max - 1));
+  if (newPosition >= position) {
+    newPosition++;
+  }
+  return newPosition;
+}
+// current item
 let position;
 addEventListener("DOMContentLoaded", (e) => {
   const person = {
@@ -54,28 +76,20 @@ prevBtn.addEventListener("click", (e) => {
   position--;
   if (position === -1)
     position = reviews.length - 1;
-  author.textContent = reviews[position].name;
-  job.textContent = reviews[position].job;
-  img.setAttribute("src", reviews[position].img);
-  text.textContent = reviews[position].text;
+  showPerson(reviews[position]);
 });
 
 nextBtn.addEventListener("click", (e) => {
   position++;
   if (position === reviews.length)
     position = 0;
-  author.textContent = reviews[position].name;
-  job.textContent = reviews[position].job;
-  img.setAttribute("src", reviews[position].img);
-  text.textContent = reviews[position].text;
+  showPerson(reviews[position]);
 });
 
 randBtn.addEventListener("click", (e) => {
-  const position = Math.floor(Math.random() * (reviews.length - 1));
-  author.textContent = reviews[position].name;
-  job.textContent = reviews[position].job;
-  img.setAttribute("src", reviews[position].img);
-  text.textContent = reviews[position].text;
+  const newPosition = genrateUniqRand(reviews.length);
+  showPerson(reviews[newPosition]);
+  position = newPosition;
 });
 
 
