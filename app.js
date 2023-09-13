@@ -30,7 +30,53 @@ const reviews = [
   },
 ];
 // select items
-const name = document.getElementById("author");
+const author = document.getElementById("author");
 const job = document.getElementById("job");
 const text = document.getElementById("info");
 const img = document.getElementById("person-img");
+const prevBtn = document.querySelector(".prev-btn");
+const nextBtn = document.querySelector(".next-btn");
+const randBtn = document.querySelector(".random-btn");
+let position;
+addEventListener("DOMContentLoaded", (e) => {
+  const person = {
+    id: 5,
+    name: author.textContent,
+    job: job.textContent,
+    img: img.getAttribute("src"),
+    text: text.textContent,
+  }
+  reviews.push(person);
+  position = 4;
+});
+
+prevBtn.addEventListener("click", (e) => {
+  position--;
+  if (position === -1)
+    position = reviews.length - 1;
+  author.textContent = reviews[position].name;
+  job.textContent = reviews[position].job;
+  img.setAttribute("src", reviews[position].img);
+  text.textContent = reviews[position].text;
+});
+
+nextBtn.addEventListener("click", (e) => {
+  position++;
+  if (position === reviews.length)
+    position = 0;
+  author.textContent = reviews[position].name;
+  job.textContent = reviews[position].job;
+  img.setAttribute("src", reviews[position].img);
+  text.textContent = reviews[position].text;
+});
+
+randBtn.addEventListener("click", (e) => {
+  const position = Math.floor(Math.random() * (reviews.length - 1));
+  author.textContent = reviews[position].name;
+  job.textContent = reviews[position].job;
+  img.setAttribute("src", reviews[position].img);
+  text.textContent = reviews[position].text;
+});
+
+
+
